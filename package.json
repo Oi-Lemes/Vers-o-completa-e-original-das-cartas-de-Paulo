@@ -1,0 +1,13 @@
+{
+  "name": "bencaos-frei-gilson",
+  "version": "1.0.0",
+  "description": "Chaves Secretas da Benção - Mais de 200 orações em áudio",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python -m http.server 8000",
+    "start": "python -m http.server 8000"
+  },
+  "keywords": ["bençãos", "orações", "frei-gilson", "espiritual"],
+  "author": "Frei Gilson",
+  "license": "ISC"
+}
