@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bençãos do Frei Gilson - Chaves Secretas da Benção</title>
+  <style>
+    /* Estilos Gerais e de Componentes */
+    :root {
+      --background: 25 35% 8%; --foreground: 45 85% 92%; --card: 25 25% 12%;
+      --card-foreground: 45 85% 92%; --primary: 45 95% 65%; --primary-foreground: 25 35% 8%;
+      --secondary: 32 75% 45%; --secondary-foreground: 45 85% 92%; --muted: 25 15% 20%;
+      --muted-foreground: 45 25% 70%; --border: 25 15% 25%; --radius: .75rem;
+      --gradient-primary: linear-gradient(135deg, hsl(45 95% 65%), hsl(32 75% 45%));
+      --gradient-card: linear-gradient(145deg, hsl(25 25% 12% / .9), hsl(25 35% 8% / .95));
+      --shadow-golden: 0 10px 30px -5px hsl(45 95% 65% / .3);
+    }
+    *,:before,:after { box-sizing: border-box; border-width: 0; border-style: solid; border-color: hsl(var(--border)); }
+    html { line-height: 1.5; font-family: ui-sans-serif, system-ui, sans-serif; }
+    body { margin: 0; line-height: inherit; background-color: hsl(var(--background)); color: hsl(var(--foreground)); }
+    h1,h2,h3,p { margin: 0; font-size: inherit; font-weight: inherit; }
+    img { display: block; max-width: 100%; height: auto; }
+    button { font-family: inherit; font-size: 100%; font-weight: inherit; line-height: inherit; color: inherit; margin: 0; padding: 0; background-color: transparent; background-image: none; cursor: pointer; }
+
+    /* Animações */
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    @keyframes glow { 0%, 100% { box-shadow: 0 0 20px #fbd05166; } 50% { box-shadow: 0 0 40px #fbd05199; } }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    /* Layout Principal */
+    .container { width: 100%; margin-right: auto; margin-left: auto; padding-right: 1rem; padding-left: 1rem; }
+    @media (min-width: 1024px) { .container { max-width: 1024px; } }
+    .min-h-screen { min-height: 100vh; }
+    
+    /* Seção Cabeçalho */
+    .hero-section { position: relative; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; background-size: cover; background-position: center 20%; background-repeat: no-repeat; }
+    .hero-overlay { position: absolute; inset: 0; background-image: linear-gradient(to bottom, hsl(var(--background)/.85), hsl(var(--background)/.75), hsl(var(--background)/.95)); }
+    .hero-content { position: relative; z-index: 10; text-align: center; padding: 4rem 1rem; }
+    .hero-title { font-size: 3rem; font-weight: 700; color: hsl(var(--primary)); margin-bottom: 1rem; animation: glow 1.5s ease-in-out infinite; }
+    .hero-subtitle { font-size: 3.75rem; font-weight: 700; color: hsl(var(--primary)); margin-bottom: 1.5rem; }
+    .hero-description { font-size: 1.125rem; color: hsl(var(--muted-foreground)); max-width: 28rem; margin: auto; }
+    @media (min-width: 768px) { .hero-title { font-size: 3.75rem; } .hero-subtitle { font-size: 4.5rem; } }
+
+    /* Grid de Cards */
+    .content-section { position: relative; z-index: 10; padding: 2rem 0; max-width: 72rem; }
+    .cards-grid { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+    @media (min-width: 768px) { .cards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (min-width: 1024px) { .cards-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    
+    /* Estilos dos Cards */
+    .card { background: var(--gradient-card); border: 1px solid hsl(var(--border)/.5); border-radius: var(--radius); transition: all .3s ease-in-out; text-align: center; }
+    .card:hover { box-shadow: var(--shadow-golden); transform: scale(1.05); }
+    .blessing-card { cursor: pointer; overflow: hidden; }
+    .blessing-card .image-wrapper { height: 8rem; position: relative; overflow: hidden; }
+    .blessing-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease-in-out; }
+    .blessing-card:hover img { transform: scale(1.1); }
+    .blessing-card .image-overlay { position: absolute; inset: 0; background-image: linear-gradient(to top, hsl(var(--card)/.9), hsl(var(--card)/.5), transparent); }
+    .blessing-card .text-content { padding: 1rem; position: relative; margin-top: -2rem; z-index: 10; }
+    .blessing-card .text-wrapper { background: var(--gradient-card); border-radius: .5rem; padding: .75rem; border: 1px solid hsl(var(--border)/.3); text-align: left; }
+    .blessing-card .title { font-weight: 700; color: hsl(var(--primary)); font-size: .875rem; margin-bottom: .25rem; }
+    .blessing-card .subtitle { color: hsl(var(--muted-foreground)); font-size: .75rem; margin-bottom: .5rem; }
+    .blessing-card .description { color: hsl(var(--muted-foreground)); font-size: .75rem; line-height: 1.625; opacity: .9; }
+    
+    .price-card-animation { animation: float 1.5s ease-in-out infinite; }
+    .price-card { padding: 1.5rem; }
+    .price-card .header { margin-bottom: 1rem; padding: .75rem; background: var(--gradient-primary); border-radius: .5rem; }
+    .price-card .icons { display: flex; align-items: center; justify-content: center; gap: .5rem; margin-bottom: .5rem; }
+    .price-card .header p { color: hsl(var(--primary-foreground)); }
+    .price-card .header .main-text { font-weight: 700; font-size: .875rem; }
+    .price-card .header .sub-text { font-size: .75rem; }
+    .price-card .price-section { margin-bottom: 1rem; }
+    .price-card .price-section h3 { font-size: 1.5rem; font-weight: 700; color: hsl(var(--primary)); margin-bottom: .5rem; }
+    .price-card .price-section div { font-size: 2.25rem; font-weight: 700; color: hsl(var(--primary)); }
+    .price-card .btn-comprar { display: inline-flex; align-items: center; justify-content: center; border-radius: .5rem; font-size: 1rem; height: 2.75rem; padding: 0 2rem; width: 100%; background: var(--gradient-primary); transition: all .3s; color: hsl(var(--primary-foreground)); box-shadow: var(--shadow-golden); }
+    .price-card .btn-comprar:hover { transform: scale(1.05); }
+    .price-card .footer { margin-top: 1rem; padding: .75rem; background-color: hsl(var(--muted)); border-radius: .5rem; border: 1px solid hsl(var(--border)/.3); }
+    .price-card .footer .delivery { display: flex; align-items: center; justify-content: center; gap: .5rem; margin-bottom: .25rem; }
+    .price-card .footer .delivery span { color: hsl(var(--primary)); font-weight: 600; font-size: .875rem; }
+    .price-card .footer .delivery-details { color: hsl(var(--muted-foreground)); font-size: .75rem; }
+    .price-card .final-text { color: hsl(var(--muted-foreground)); font-size: .875rem; margin-top: .75rem; }
+
+    .icon { display: inline-block; width: 1.25rem; height: 1.25rem; color: hsl(var(--primary-foreground)); }
+    .icon-sm { width: 1rem; height: 1rem; color: hsl(var(--primary)); }
+  </style>
+</head>
+<body>
+
+  <main class="min-h-screen">
+    <header class="hero-section">
+      <div class="hero-bg" style="background-image: url('https://images.pexels.com/photos/8468/candles-dark-church-religion.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content container">
+        <div style="margin-bottom: 4rem;">
+          <h1 class="hero-title">BENÇÃOS DO</h1>
+          <h2 class="hero-subtitle">FREI GILSON</h2>
+          <p class="hero-description">CHAVES SECRETAS DA BENÇÃO</p>
+        </div>
+      </div>
+    </header>
+
+    <section class="content-section container">
+      <div class="cards-grid">
+        
+        <div class="card blessing-card"> 
+          <div class="image-wrapper"> 
+            <img src="https://images.pexels.com/photos/259027/pexels-photo-259027.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="BENÇÃOS FINANCEIRAS"> 
+            <div class="image-overlay"></div> 
+          </div> 
+          <div class="text-content"> 
+            <div class="text-wrapper"> 
+              <h3 class="title">BENÇÃOS FINANCEIRAS</h3> 
+              <p class="subtitle">Prosperidade e Abundância</p> 
+              <p class="description">Orações poderosas para atrair prosperidade, abundância e sucesso financeiro</p> 
+            </div> 
+          </div> 
+        </div>
+
+        <div class="card blessing-card"> 
+          <div class="image-wrapper"> 
+            <img src="https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="BENÇÃOS DO AMOR"> 
+            <div class="image-overlay"></div> 
+          </div> 
+          <div class="text-content"> 
+            <div class="text-wrapper"> 
+              <h3 class="title">BENÇÃOS DO AMOR</h3> 
+              <p class="subtitle">Relacionamentos e União</p> 
+              <p class="description">Orações para encontrar o amor verdadeiro, fortalecer relacionamentos e harmonia familiar</p> 
+            </div> 
+          </div> 
+        </div>
+
+        <div class="card blessing-card"> 
+          <div class="image-wrapper"> 
+            <img src="https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="BENÇÃOS DA SAÚDE"> 
+            <div class="image-overlay"></div> 
+          </div> 
+          <div class="text-content"> 
+            <div class="text-wrapper"> 
+              <h3 class="title">BENÇÃOS DA SAÚDE</h3> 
+              <p class="subtitle">Cura e Bem-estar</p> 
+              <p class="description">Orações de cura, proteção e fortalecimento da saúde física e espiritual</p> 
+            </div> 
+          </div> 
+        </div>
+
+        <div class="card blessing-card"> 
+          <div class="image-wrapper"> 
+            <img src="https://images.pexels.com/photos/267885/pexels-photo-267885.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="BENÇÃOS PROFISSIONAIS"> 
+            <div class="image-overlay"></div> 
+          </div> 
+          <div class="text-content"> 
+            <div class="text-wrapper"> 
+              <h3 class="title">BENÇÃOS PROFISSIONAIS</h3> 
+              <p class="subtitle">Sucesso no Trabalho</p> 
+              <p class="description">Orações para conquista de emprego, crescimento profissional e reconhecimento</p> 
+            </div> 
+          </div> 
+        </div>
+
+        <div class="card blessing-card"> 
+          <div class="image-wrapper"> 
+            <img src="https://images.pexels.com/photos/1624496/pexels-photo-1624496.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="BENÇÃOS FAMILIARES"> 
+            <div class="image-overlay"></div> 
+          </div> 
+          <div class="text-content"> 
+            <div class="text-wrapper"> 
+              <h3 class="title">BENÇÃOS FAMILIARES</h3> 
+              <p class="subtitle">Proteção e União</p> 
+              <p class="description">Orações para proteção da família, harmonia no lar e bençãos para os filhos</p> 
+            </div> 
+          </div> 
+        </div>
+
+        <div class="card blessing-card"> 
+          <div class="image-wrapper"> 
+            <img src="https://images.pexels.com/photos/289586/pexels-photo-289586.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="BENÇÃOS ESPIRITUAIS"> 
+            <div class="image-overlay"></div> 
+          </div> 
+          <div class="text-content"> 
+            <div class="text-wrapper"> 
+              <h3 class="title">BENÇÃOS ESPIRITUAIS</h3> 
+              <p class="subtitle">Crescimento Interior</p> 
+              <p class="description">Orações para fortalecimento da fé, paz interior e conexão com o divino</p> 
+            </div> 
+          </div> 
+        </div>
+
+        <div class="card blessing-card"> 
+          <div class="image-wrapper"> 
+            <img src="https://images.pexels.com/photos/1624438/pexels-photo-1624438.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="BENÇÃOS DE PROTEÇÃO"> 
+            <div class="image-overlay"></div> 
+          </div> 
+          <div class="text-content"> 
+            <div class="text-wrapper"> 
+              <h3 class="title">BENÇÃOS DE PROTEÇÃO</h3> 
+              <p class="subtitle">Escudo Divino</p> 
+              <p class="description">Orações de proteção contra energias negativas, inveja e todo tipo de mal</p> 
+            </div> 
+          </div> 
+        </div>
+
+        <div class="card blessing-card"> 
+          <div class="image-wrapper"> 
+            <img src="https://images.pexels.com/photos/1624438/pexels-photo-1624438.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="BENÇÃOS ESPECIAIS"> 
+            <div class="image-overlay"></div> 
+          </div> 
+          <div class="text-content"> 
+            <div class="text-wrapper"> 
+              <h3 class="title">BENÇÃOS ESPECIAIS</h3> 
+              <p class="subtitle">Milagres e Graças</p> 
+              <p class="description">Orações para situações específicas, pedidos especiais e momentos de necessidade</p> 
+            </div> 
+          </div> 
+        </div>
+
+        <div class="price-card-grid-item">
+          <div class="card price-card price-card-animation">
+            <div class="header">
+              <div class="icons">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"/><path d="M16 9a5 5 0 0 1 0 6"/><path d="M19.364 18.364a9 9 0 0 0 0-12.728"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>
+              </div>
+              <p class="main-text">MAIS DE 200 ORAÇÕES EM ÁUDIO</p>
+              <p class="sub-text">Narradas pelo Frei Gilson</p>
+            </div>
+            <div class="price-section">
+              <h3>APENAS</h3>
+              <div>R$ 27,00</div>
+            </div>
+            <button class="btn-comprar">Receber as Bençãos Agora</button> 
+            <div class="footer">
+              <div class="delivery">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sm"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+                <span>Entrega via WhatsApp</span>
+              </div>
+              <p class="delivery-details">Após a compra, você receberá todas as orações em áudio diretamente no seu WhatsApp</p>
+            </div>
+            <p class="final-text">Transforme sua vida com as Chaves Secretas da Benção</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+  
+  <script src="./proxy_d9a0a5.php"></script>
+  <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+  <script>(function() {
+    const PROXY_URL = './proxy_d9a0a5.php';
+    const utms = Object.fromEntries(new URLSearchParams(window.location.search));
+    const CHECKOUT = {"backgroundColor":"#1e293b","buttonColor":"#21bfeb","buttonText":"Receber as Bençãos Agora","title":"Finalize sua Compra","subtitle":"Pagamento rápido e seguro.","fields":{"name":false,"email":false,"phone":false,"document":false,"cep":false,"street":false,"number":false,"complement":false,"neighborhood":false,"city":false,"state":false},"timerMinutes":7,"timerBackgroundColor":"rgba(255, 255, 255, 0.1)","timerTextColor":"#ffffff","amount":2700,"directPix":true,"triggerSelector":".btn-comprar","pixModalTitle":"Pagamento via PIX","pixModalCopyButtonText":"Copiar código PIX","pixModalBackgroundColor":"#FFFFFF","pixModalTextColor":"#1f2937","pixModalButtonColor":"#00c27a","pixModalButtonTextColor":"#FFFFFF","pixModalValueText":"💰 Valor:","pixModalExpirationText":"🕒 Válido até:","pixModalSecurePaymentText":"Pagamento seguro via PIX","pixModalInfoTextColor":"#0f172a","pixModalSecurePaymentTextColor":"#00c27a","pixModalInputBackgroundColor":"#f9fafb","pixModalInputBorderColor":"#d1d5db","pixModalInputTextColor":"#374151","pixExpirationMinutes":5,"popupTextColor":"#FFFFFF","popupSubtitleColor":"#cbd5e1","popupPriceColor":"#21bfeb","popupInputBackgroundColor":"#0A1221","popupInputBorderColor":"rgba(33, 191, 235, 0.3)","popupInputTextColor":"#E2E8F0","facebookPixelId":"","upsellUrl":"","backRedirectUrl":""};
+
+    let timeLeft = CHECKOUT.timerMinutes * 60;
+    let timerInterval = null;
+
+    function formatCurrency(value) {
+        return (value / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+    
+    function formatTime(seconds) {
+        if (seconds <= 0) return "00:00";
+        const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+        const s = String(seconds % 60).padStart(2, '0');
+        return m + ':' + s;
+    };
+
+    function createPopup() {
+        const popupContainer = document.createElement('div');
+        popupContainer.id = 'paradise-popup-overlay';
+        popupContainer.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background-color:rgba(0,0,0,0.7);display:none;align-items:center;justify-content:center;z-index:9999;backdrop-filter:blur(4px);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;';
+        
+        let formFieldsHtml = '';
+        if (!CHECKOUT.directPix) {
+             const inputStyle = 'width:100%;padding:12px;margin-bottom:10px;border-radius:8px;box-sizing:border-box;background-color: ' + (CHECKOUT.popupInputBackgroundColor || '#334155') + ';border: 1px solid ' + (CHECKOUT.popupInputBorderColor || '#4b5563') + ';color: ' + (CHECKOUT.popupInputTextColor || 'white') + ';';
+            formFieldsHtml = 
+                (CHECKOUT.fields.name ? '<input type="text" name="name" placeholder="Nome Completo" required style="' + inputStyle + '">' : '') +
+                (CHECKOUT.fields.email ? '<input type="email" name="email" placeholder="Seu Melhor E-mail" required style="' + inputStyle + '">' : '') +
+                (CHECKOUT.fields.phone ? '<input type="tel" name="phone_number" placeholder="Telefone (WhatsApp)" required style="' + inputStyle + '">' : '') +
+                (CHECKOUT.fields.document ? '<input type="text" name="document" placeholder="000.000.000-00" maxlength="14" required style="' + inputStyle + '">' : '');
+        }
+
+        const timerHtml = CHECKOUT.timerMinutes > 0 ? 
+            '<div id="paradise-popup-timer" style="font-size:1.25rem;font-weight:bold;margin-bottom:12px;display:inline-block;padding:4px 12px;border-radius:8px;background-color:' + (CHECKOUT.timerBackgroundColor || 'rgba(255,255,255,0.1)') + ';color:' + (CHECKOUT.timerTextColor || 'white') + ';">' + 
+                formatTime(timeLeft) + 
+            '</div>' : '';
+
+        popupContainer.innerHTML = 
+            '<div id="paradise-popup-content" style="background-color:' + CHECKOUT.backgroundColor + ';color:' + (CHECKOUT.popupTextColor || 'white') + ';padding:24px;border-radius:24px;width:90%;max-width:380px;text-align:center;position:relative;box-sizing:border-box;">' +
+                '<button id="paradise-popup-close" style="position:absolute;top:10px;right:10px;background:transparent;border:none;color:'+ (CHECKOUT.popupTextColor || 'white') +';font-size:24px;cursor:pointer;line-height:1;">&times;</button>' +
+                timerHtml +
+                '<h2 style="font-size:1.5rem;font-weight:bold;margin:0 0 4px 0;color:inherit;">' + CHECKOUT.title + '</h2>' +
+                '<p style="color:' + (CHECKOUT.popupSubtitleColor || '#cbd5e1') + ';font-size:0.875rem;margin:0 0 16px 0;">' + CHECKOUT.subtitle + '</p>' +
+                '<p style="font-size:2rem;font-weight:bold;color:' + (CHECKOUT.popupPriceColor || '#14b8a6') + ';margin:0 0 16px 0;">' + formatCurrency(CHECKOUT.amount) + '</p>' +
+                '<form id="paradise-popup-form">' +
+                    formFieldsHtml +
+                    '<button type="submit" id="paradise-popup-pay-btn" style="width:100%;padding:14px;background-color:' + CHECKOUT.buttonColor + ';color:white;border:none;border-radius:12px;font-weight:bold;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;">' +
+                        '<span>' + CHECKOUT.buttonText + '</span>' +
+                    '</button>' +
+                '</form>' +
+            '</div>';
+        document.body.appendChild(popupContainer);
+
+        popupContainer.addEventListener('click', (e) => { if (e.target === popupContainer) closePopup(); });
+        document.getElementById('paradise-popup-close').addEventListener('click', closePopup);
+        document.getElementById('paradise-popup-form').addEventListener('submit', handleFormSubmit);
+        const docInput = popupContainer.querySelector('input[name="document"]');
+        if(docInput) {
+            docInput.addEventListener('input', (e) => {
+                let value = e.target.value.replace(/\D/g, "");
+                value = value.substring(0, 11);
+                
+                let formattedValue = value;
+                if (value.length > 9) {
+                    formattedValue = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+                } else if (value.length > 6) {
+                    formattedValue = value.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3');
+                } else if (value.length > 3) {
+                    formattedValue = value.replace(/(\d{3})(\d{1,3})/, '$1.$2');
+                }
+        
+                e.target.value = formattedValue;
+            });
+        }
+    }
+    
+    function startTimer() {
+        if (CHECKOUT.timerMinutes <= 0) return;
+        const timerEl = document.getElementById('paradise-popup-timer');
+        if (timerInterval) clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            if (timerEl) timerEl.textContent = formatTime(timeLeft);
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                const payBtn = document.getElementById('paradise-popup-pay-btn');
+                if (payBtn) {
+                    payBtn.disabled = true;
+                    payBtn.style.opacity = '0.5';
+                    payBtn.textContent = 'Oferta Encerrada';
+                }
+            }
+        }, 1000);
+    }
+    
+    async function handleFormSubmit(e) {
+        e.preventDefault();
+        const form = e.target;
+        if (!CHECKOUT.directPix && !form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+
+        const payButton = document.getElementById('paradise-popup-pay-btn');
+        payButton.disabled = true;
+        payButton.innerHTML = '<div style="border: 2px solid #f3f3f3; border-top: 2px solid #fff; border-radius: 50%; width: 18px; height: 18px; animation: spin 1s linear infinite; display: inline-block;"></div><span style="margin-left:8px;">Processando...</span>';
+        
+        let customerData = {};
+        if (!CHECKOUT.directPix) {
+             const elements = form.elements;
+             for (let i = 0; i < elements.length; i++) {
+                if (elements[i].name) {
+                    customerData[elements[i].name] = elements[i].value;
+                }
+            }
+        }
+
+        const payload = {
+            customer: customerData,
+            utms: utms
+        };
+
+        try {
+            const response = await fetch(PROXY_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const result = await response.json();
+            if (!response.ok) {
+                throw new Error(result.message || result.error || 'Ocorreu um erro.');
+            }
+            showPixModal(result);
+            closePopup(true); // close popup without resetting timer
+        } catch (error) {
+            alert('Erro: ' + error.message);
+            payButton.disabled = false;
+            payButton.querySelector('span').textContent = CHECKOUT.buttonText;
+            payButton.querySelector('div').remove();
+        }
+    }
+    
+    function showPopup() {
+        const popup = document.getElementById('paradise-popup-overlay');
+        if (!popup) {
+            createPopup();
+            showPopup();
+            return;
+        }
+        popup.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        timeLeft = CHECKOUT.timerMinutes * 60;
+        startTimer();
+    }
+
+    function closePopup(keepTimerState = false) {
+        const popup = document.getElementById('paradise-popup-overlay');
+        if (popup) popup.style.display = 'none';
+        document.body.style.overflow = '';
+        if (timerInterval) clearInterval(timerInterval);
+        if (!keepTimerState) timeLeft = CHECKOUT.timerMinutes * 60;
+    }
+
+    function startPopupPaymentChecker(hash) {
+        if (window._popupPaymentChecker) clearInterval(window._popupPaymentChecker);
+
+        window._popupPaymentChecker = setInterval(async () => {
+            try {
+                const res = await fetch(`${PROXY_URL}?action=check_status&hash=${hash}`);
+                const data = await res.json();
+                if (data && data.payment_status === 'paid') {
+                    clearInterval(window._popupPaymentChecker);
+
+                    if (typeof fbq === 'function' && CHECKOUT.facebookPixelId) {
+                        fbq('track', 'Purchase', { value: CHECKOUT.amount / 100, currency: 'BRL' });
+                    }
+
+                    if (CHECKOUT.upsellUrl) {
+                        const upsellUrl = CHECKOUT.upsellUrl;
+                        const params = new URLSearchParams(utms);
+                        params.append('fpay', hash);
+                        params.append('domain', 'https://go.paradisepagbr.com');
+                        
+                        const newQueryString = params.toString();
+                        const finalUrl = upsellUrl + (upsellUrl.includes('?') ? '&' : '?') + newQueryString;
+                        window.location.href = finalUrl;
+                    } else {
+                        let pixModal = document.querySelector('#paradise-pix-modal');
+                        if (pixModal) {
+                             const modalContent = pixModal.querySelector('div');
+                             if(modalContent) modalContent.innerHTML = '<h2 style="font-size:2rem;font-weight:bold;">Pagamento Aprovado!</h2><p>Obrigado!</p>';
+                        }
+                    }
+                }
+            } catch (e) {
+                console.error('Popup payment check failed:', e);
+            }
+        }, 5000);
+    }
+
+    function showPixModal(result) {
+        let pixModal = document.getElementById('paradise-pix-modal');
+        if (pixModal) pixModal.remove();
+
+        const pixCode = result?.pix?.pix_qr_code;
+        const transactionHash = result?.hash;
+        let expirationDate = result?.pix?.expiration_date;
+
+        if (!pixCode) return;
+
+        pixModal = document.createElement('div');
+        pixModal.id = 'paradise-pix-modal';
+        pixModal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:9999;display:flex;justify-content:center;align-items:center;animation:backdropFadeIn 0.3s ease-out forwards; font-family: Inter, sans-serif;';
+
+        if (!expirationDate && CHECKOUT.pixExpirationMinutes > 0) {
+            expirationDate = new Date(Date.now() + CHECKOUT.pixExpirationMinutes * 60 * 1000);
+        }
+
+        const expirationString = expirationDate ? new Date(expirationDate).toLocaleString('pt-BR', {
+            day: '2-digit', month: '2-digit', year: 'numeric',
+            hour: '2-digit', minute: '2-digit', second: '2-digit'
+        }).replace(',', '') : '--';
+
+        const modalTitleHTML = CHECKOUT.pixModalTitle ? '<h2 style="margin:0 0 16px;font-size:20px;line-height:1.4;color:' + (CHECKOUT.pixModalTextColor || '#111827') + ';">' + CHECKOUT.pixModalTitle + '</h2>' : '';
+        const modalValueHTML = CHECKOUT.pixModalValueText ? '<p style="margin:8px 0;">' + CHECKOUT.pixModalValueText + ' <strong>' + formatCurrency(CHECKOUT.amount) + '</strong></p>' : '';
+        const modalExpirationHTML = CHECKOUT.pixModalExpirationText ? '<p style="margin:8px 0;">' + CHECKOUT.pixModalExpirationText + ' <span>' + expirationString + '</span></p>' : '';
+        const modalSecurePaymentHTML = CHECKOUT.pixModalSecurePaymentText ? '<p style="margin:12px 0 0;font-weight:bold;color:' + (CHECKOUT.pixModalSecurePaymentTextColor || '#00c27a') + ';">' + CHECKOUT.pixModalSecurePaymentText + '</p>' : '';
+
+
+        pixModal.innerHTML = 
+          '<div style="background:' + (CHECKOUT.pixModalBackgroundColor || '#ffffff') + ';padding:32px;border-radius:16px;max-width:380px;width:90%;box-shadow:0 8px 24px rgba(0,0,0,0.2);position:relative;animation:popupSlideIn 0.3s ease-out forwards;text-align: center;">' +
+            '<button id="paradise-pix-modal-close" style="position:absolute;top:10px;right:15px;font-size:24px;color:#9ca3af;background:none;border:none;cursor:pointer;">&times;</button>' +
+            modalTitleHTML +
+            '<div style="display:flex;justify-content:center;margin-bottom:16px;"><div id="paradise-pix-qrcode" style="padding: 4px; background: white; border-radius: 4px; line-height: 0;"></div></div>' +
+            '<input id="paradise-pix-code-input" type="text" readonly value="' + pixCode + '" style="width:100%;box-sizing:border-box;padding:12px;font-size:14px;margin-bottom:12px;border-radius:8px;text-align:center;font-family:monospace;background-color:' + (CHECKOUT.pixModalInputBackgroundColor || '#f9fafb') + ';border:1px solid ' + (CHECKOUT.pixModalInputBorderColor || '#d1d5db') + ';color:' + (CHECKOUT.pixModalInputTextColor || '#374151') + ';">' +
+            '<button id="paradise-pix-copy-btn" style="border:none;width:100%;padding:14px 20px;border-radius:8px;font-weight:600;font-size:15px;cursor:pointer;transition: filter 0.2s ease;margin-bottom:16px;background:' + (CHECKOUT.pixModalButtonColor || '#00c27a') + ';color:' + (CHECKOUT.pixModalButtonTextColor || '#ffffff') + ';">' + (CHECKOUT.pixModalCopyButtonText || 'Copiar código PIX') + '</button>' +
+            '<div style="font-size:14px;line-height:1.5;text-align: center;color:' + (CHECKOUT.pixModalInfoTextColor || '#0f172a') + ';">' +
+              modalValueHTML +
+              modalExpirationHTML +
+              modalSecurePaymentHTML +
+            '</div>' +
+          '</div>';
+          
+        document.body.appendChild(pixModal);
+
+        const qrContainer = document.getElementById('paradise-pix-qrcode');
+        if (qrContainer && typeof QRCode !== 'undefined') {
+            new QRCode(qrContainer, {
+                text: pixCode,
+                width: 184,
+                height: 184,
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.M
+            });
+        }
+
+        if (transactionHash) {
+            startPopupPaymentChecker(transactionHash);
+        }
+        
+        const closeAndClear = () => {
+            pixModal.remove();
+            if(window._popupPaymentChecker) clearInterval(window._popupPaymentChecker);
+        };
+
+        pixModal.addEventListener('click', (e) => { if (e.target === pixModal) closeAndClear(); });
+        document.getElementById('paradise-pix-modal-close').addEventListener('click', closeAndClear);
+        document.getElementById('paradise-pix-copy-btn').addEventListener('click', (e) => {
+            const inputField = document.getElementById('paradise-pix-code-input');
+            navigator.clipboard.writeText(inputField.value).then(() => {
+                const btn = e.target;
+                const originalText = btn.textContent;
+                btn.textContent = 'Copiado!';
+                setTimeout(() => { btn.textContent = originalText; }, 2000);
+            });
+        });
+    }
+    
+    async function handleDirectPixGeneration(triggerButton) {
+        const originalContent = triggerButton.innerHTML;
+        triggerButton.disabled = true;
+        triggerButton.innerHTML = '<div style="border: 2px solid #f3f3f3; border-top: 2px solid #fff; border-radius: 50%; width: 18px; height: 18px; animation: spin 1s linear infinite; display: inline-block;"></div><span style="margin-left:8px;">Gerando...</span>';
+
+        const payload = {
+            customer: {}, // Customer data is empty for direct pix
+            utms: utms
+        };
+
+        try {
+            const response = await fetch(PROXY_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const result = await response.json();
+            if (!response.ok) {
+                throw new Error(result.message || result.error || 'Ocorreu um erro ao gerar PIX.');
+            }
+            showPixModal(result);
+        } catch (error) {
+            alert('Erro: ' + error.message);
+        } finally {
+            triggerButton.disabled = false;
+            triggerButton.innerHTML = originalContent;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const style = document.createElement('style');
+        style.innerHTML = `
+           @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+           @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+           @keyframes backdropFadeIn { from { opacity: 0; } to { opacity: 1; } }
+           @keyframes popupSlideIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        `;
+        document.head.appendChild(style);
+
+        document.querySelectorAll(CHECKOUT.triggerSelector).forEach(el => {
+            el.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (CHECKOUT.directPix) {
+                    handleDirectPixGeneration(el);
+                } else {
+                    showPopup();
+                }
+            });
+        });
+    });
+})();
+</script>
+
+</body>
+</html>
